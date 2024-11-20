@@ -17,9 +17,6 @@ const CityPopulationData = () => {
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error fetching city data</p>;
 
-    console.log("URL City Name:", cityName); // Log cityName from the URL
-    console.log("API Data:", cityData?.data); // Log API response for debugging
-
     // Normalize the city name from useParams and the API for matching
     const normalizedCityName = cityName.trim().toLowerCase();
     const cityInfo = cityData?.data?.find(
