@@ -23,6 +23,15 @@ const fetchCountryFlag = async (iso2) => {
 };
 
 // Fetch capital data from the API
+const fetchCountryPopulation = async () => {
+    const response = await fetch('https://countriesnow.space/api/v0.1/countries/population');
+    if (!response.ok) {
+        throw new Error('Error fetching total population');
+    }
+    return response.json();
+};
+
+// Fetch capital data from the API
 const fetchCountryCapital = async () => {
     const response = await fetch('https://countriesnow.space/api/v0.1/countries/capital');
     if (!response.ok) {
@@ -53,12 +62,25 @@ const CountryDetailsComponent = ({countries}) => {
         fetchCountryCapital
     );
 
-    if (isFlagLoading || isCapitalLoading) return <p>Loading...</p>;
-    if (isFlagError || isCapitalError) return <p>Error fetching data</p>;
+    // Fetch population data
+    const {data: populationData, isLoading: isPopulationLoading, isError: isPopulationError} = useQuery(
+        'getCountryPopulation',
+        fetchCountryPopulation
+    );
+    if (isFlagLoading || isCapitalLoading || isPopulationLoading) return <p>Loading...</p>;
+    if (isFlagError || isCapitalError || isPopulationError) return <p>Error fetching data</p>;
 
     // Extract flag and capital from the fetched data
     const flag = flagData?.data?.flag;
     const capital = capitalsData?.data?.find((capital) => capital.iso3 === iso3)?.capital;
+    const populationInfo = populationData?.data?.find((item) => item.country === country.country)?.populationCounts;
+
+    // Get the most recent population
+    const latestPopulation = populationInfo?.[populationInfo.length - 1];
+
+    if (!populationInfo) {
+       return null;
+    }
 
     return (
         <div>
@@ -68,6 +90,7 @@ const CountryDetailsComponent = ({countries}) => {
             <p>
                 Number of <Link to={`/countries/${iso3}/cities`}>cities</Link>: {cities?.length}
             </p>
+            {latestPopulation ? (<p>Latest Population ({latestPopulation.year}): {latestPopulation.value.toLocaleString()}</p>) : null}
         </div>
     );
 };

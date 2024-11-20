@@ -18,13 +18,13 @@ const CityPopulationData = () => {
     if (isError) return <p>Error fetching city data</p>;
 
     // Normalize the city name from useParams and the API for matching
-    const normalizedCityName = cityName.trim().toLowerCase();
+    const normalisedCityName = cityName.trim().toLowerCase();
     const cityInfo = cityData?.data?.find(
-        (city) => city.city.trim().toLowerCase() === normalizedCityName
+        (city) => city.city.trim().toLowerCase() === normalisedCityName
     );
 
     if (!cityInfo) {
-        console.log("City not found:", normalizedCityName);
+        console.log("City not found:", normalisedCityName);
         return <p>City not found</p>;
     }
 

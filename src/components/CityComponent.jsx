@@ -1,26 +1,33 @@
-import {Link, useParams} from "react-router-dom";
+// Fetch function to get countries
+import {Link} from "react-router-dom";
+import {useQuery} from "react-query";
 
-// CityComponent takes the list of countries as a prop
-const CityComponent = ({countries}) => {
-    const {iso3} = useParams();
+const fetchCities = async () => {
+    const response = await fetch('https://countriesnow.space/api/v0.1/countries/population/cities');
+    return response.json();
+};
 
-    // Find the country with the given iso3 code
-    const country = countries.find((country) => country.iso3 === iso3);
-    if (!country) return <p>Country not found</p>;
+const CityComponent = () => {
+    // Fetch countries once and cache the result using React Query
+    const {data: cities, error, isLoading} = useQuery('getCities', fetchCities);
+
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div>
-            <h2>All Cities for {country.country}</h2>
+            <h1>Cities</h1>
             <ul>
-                {country.cities.map((city, index) => (
-                    <li key={index}>
-                        {/* Link to details of each city (if required) */}
-                        <Link to={`/countries/${iso3}/cities/${city}`}>{city}</Link>
-                    </li>
-                ))}
+                {cities.data.map((city) => {
+                    return (
+                        <li key={city.city}>
+                            <Link to={`/cities/${city.city}`}>{city.city}</Link>
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );
-};
+}
 
 export default CityComponent;

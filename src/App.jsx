@@ -1,8 +1,9 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import {useQuery} from "react-query"; // React Query hook
+import {useQuery} from "react-query";
+import CityComponent from "./components/CityComponent.jsx";
 import CountryComponent from "./components/CountryComponent.jsx";
 import CountryDetailsComponent from "./components/CountryDetailsComponent.jsx";
-import CityComponent from "./components/CityComponent.jsx";
+import CountryCityComponent from "./components/CountryCityComponent.jsx";
 import CityPopulationData from "./components/CityPopulationData.jsx";
 
 // Fetch function to get countries
@@ -23,8 +24,10 @@ const App = () => {
             <div>
                 <Routes>
                     <Route path="/countries" element={<CountryComponent countries={countries.data}/>}/>
+                    <Route path="/cities" element={<CityComponent/>}/>
+                    <Route path="/cities/:city" element={<CityPopulationData/>}/>
                     <Route path="/countries/:iso3" element={<CountryDetailsComponent countries={countries.data}/>}/>
-                    <Route path="/countries/:iso3/cities" element={<CityComponent countries={countries.data}/>}/>
+                    <Route path="/countries/:iso3/cities" element={<CountryCityComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3/cities/:city" element={<CityPopulationData/>}/>
                 </Routes>
             </div>
