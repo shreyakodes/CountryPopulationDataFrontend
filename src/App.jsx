@@ -22,13 +22,14 @@ const App = () => {
     return (
         <Router>
             <div>
+                <a href="/countries">Countries</a> | <a href="/cities">Cities</a>
                 <Routes>
                     <Route path="/countries" element={<CountryComponent countries={countries.data}/>}/>
                     <Route path="/cities" element={<CityComponent/>}/>
-                    <Route path="/cities/:city" element={<CityPopulationData/>}/>
+                    <Route path="/cities/:city" element={<CityPopulationData countries={countries.data}/>}/>
                     <Route path="/countries/:iso3" element={<CountryDetailsComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3/cities" element={<CountryCityComponent countries={countries.data}/>}/>
-                    <Route path="/countries/:iso3/cities/:city" element={<CityPopulationData/>}/>
+                    <Route path="/countries/:iso3/cities/:city" element={<CityPopulationData countries={countries.data}/>}/>
                 </Routes>
             </div>
         </Router>
