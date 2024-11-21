@@ -45,7 +45,7 @@ const CountryDetailsComponent = ({countries}) => {
 
     // Find the country with the given iso3 code
     const country = countries.find((country) => country.iso3 === iso3);
-    if (!country) return <p>Country not found</p>;
+    if (!country) return <p className="container-style">Country not found</p>;
 
     const {iso2, cities} = country; // Extracts information from the country object
 
@@ -67,8 +67,8 @@ const CountryDetailsComponent = ({countries}) => {
         'getCountryPopulation',
         fetchCountryPopulation
     );
-    if (isFlagLoading || isCapitalLoading || isPopulationLoading) return <p>Loading...</p>;
-    if (isFlagError || isCapitalError || isPopulationError) return <p>Error fetching data</p>;
+    if (isFlagLoading || isCapitalLoading || isPopulationLoading) return <p className="container-style">Loading...</p>;
+    if (isFlagError || isCapitalError || isPopulationError) return <p className="container-style">Error fetching data</p>;
 
     // Extract flag and capital from the fetched data
     const flag = flagData?.data?.flag;
@@ -78,21 +78,30 @@ const CountryDetailsComponent = ({countries}) => {
     // Get the most recent population
     const latestPopulation = populationInfo?.[populationInfo.length - 1];
 
-    if (!populationInfo) {
-       return null;
-    }
-
     return (
-        <div>
-            <h1>{country.country}</h1>
-            {flag ? <img src={flag} alt={country.country} width="100"/> : <p>Flag not available</p>}
-            {capital ? <p>Capital: {capital}</p> : <p>Capital not available</p>}
-            <p>
-                Number of <Link to={`/countries/${iso3}/cities`}>cities</Link>: {cities?.length}
-            </p>
-            {latestPopulation ? (<p>Latest Population ({latestPopulation.year}): {latestPopulation.value.toLocaleString()}</p>) : null}
+        <div className="container-style space-y-2 flex items-center space-x-1">
+            <div className="w-1/2 space-y-2" >
+            <h1 className="text-2xl font-bold text-blue-600">{country.country}</h1>
+            {flag ? (<img src={flag} alt={country.country} width="150" className="rounded-lg shadow-md"/>) : (
+                <p className="text-red-500 px-0.5">Flag not available</p>)}
+            </div>
+            <div className="w-1/2 space-y-2">
+                {capital ? (
+                    <p className="text-lg font-medium text-gray-700">Capital: <span
+                        className="font-normal">{capital}</span>
+                    </p>) : (<p className="text-red-500">Capital not available</p>)}
+                <p className="text-lg font-semibold text-gray-700">
+                    Number of <Link to={`/countries/${iso3}/cities`}
+                                    className="text-blue-link"> cities</Link>
+                    : <span
+                    className="font-normal">{cities.length} </span>
+                </p>
+                {latestPopulation && (<p className="text-lg font-semibold text-gray-700">Total Population
+                    ({latestPopulation.year}): <span
+                        className="font-normal"> {latestPopulation.value.toLocaleString()} </span></p>)}
+            </div>
         </div>
-    );
+);
 };
 
 export default CountryDetailsComponent;

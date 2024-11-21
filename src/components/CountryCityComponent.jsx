@@ -1,21 +1,25 @@
-import {Link, useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // CountryCityComponent takes the list of countries as a prop
-const CountryCityComponent = ({countries}) => {
-    const {iso3} = useParams();
+const CountryCityComponent = ({ countries }) => {
+    const { iso3 } = useParams();
 
     // Find the country with the given iso3 code
     const country = countries.find((country) => country.iso3 === iso3);
-    if (!country) return <p>Country not found in database</p>;
+    if (!country) return <p className="container-style">Country not found</p>;
 
     return (
-        <div>
-            <h2>All Cities for {country.country}</h2>
-            <ul>
+        <div className="container-style">
+            <h2 className="heading-style">All Cities for {country.country}</h2>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {country.cities.map((city, index) => (
                     <li key={index}>
-                        {/* Link to details of each city (if required) */}
-                        <Link to={`/countries/${iso3}/cities/${city}`}>{city}</Link>
+                        <Link
+                            to={`/countries/${iso3}/cities/${city}`}
+                            className="item"
+                        >
+                            {city}
+                        </Link>
                     </li>
                 ))}
             </ul>

@@ -1,5 +1,5 @@
-import {useQuery} from "react-query";
-import {Link, useParams} from "react-router-dom";
+import { useQuery } from "react-query";
+import { Link, useParams } from "react-router-dom";
 
 const fetchCityData = async () => {
     const response = await fetch('https://countriesnow.space/api/v0.1/countries/population/cities');
@@ -9,13 +9,13 @@ const fetchCityData = async () => {
     return response.json();
 };
 
-const CityPopulationData = ({countries}) => {
-    const {city: cityName} = useParams();
+const CityPopulationData = ({ countries }) => {
+    const { city: cityName } = useParams();
 
-    const {data: cityData, isLoading, isError} = useQuery('getCityData', fetchCityData);
+    const { data: cityData, isLoading, isError } = useQuery('getCityData', fetchCityData);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error fetching city data</p>;
+    if (isLoading) return <p className="container-style">Loading...</p>;
+    if (isError) return <p className="container-style">Error fetching city data</p>;
 
     // Normalize the city name from useParams and the API for matching
     const normalisedCityName = cityName.trim().toLowerCase();
@@ -24,8 +24,7 @@ const CityPopulationData = ({countries}) => {
     );
 
     if (!cityInfo) {
-        console.log("City not found:", normalisedCityName);
-        return <p>City not found</p>;
+        return <p className="container-style">City not found</p>;
     }
 
     // Find the iso3 code from the countries data
@@ -37,20 +36,40 @@ const CityPopulationData = ({countries}) => {
     const iso3 = countryData?.iso3;
 
     return (
-        <div>
-            <h1>
-                Population Data for {cityInfo.city}, {countryData ? (<Link to={`/countries/${iso3}`}>{cityInfo.country}</Link>) : (cityInfo.country)}
+        <div className="container-style">
+            <h1 className="heading-style">
+                Population Data for {cityInfo.city}, {countryData ? (
+                <Link
+                    to={`/countries/${iso3}`}
+                    className="text-blue-link"
+                >
+                    {cityInfo.country}
+                </Link>
+            ) : (
+                cityInfo.country
+            )}
             </h1>
-            <ul>
+
+            <table className="table-style">
+                <thead>
+                <tr className="table-header">
+                    <th className="table-cell">Year</th>
+                    <th className="table-cell">Population</th>
+                    <th className="table-cell">Sex</th>
+                    <th className="table-cell">Reliability</th>
+                </tr>
+                </thead>
+                <tbody>
                 {cityInfo.populationCounts.map((count, index) => (
-                    <li key={index}>
-                        <p>Year: {count.year}</p>
-                        <p>Population: {count.value}</p>
-                        <p>Sex: {count.sex}</p>
-                        <p>Reliability: {count.reliability}</p> {/* Fixed typo here */}
-                    </li>
+                    <tr key={index} className="table-row">
+                        <td className="table-cell">{count.year}</td>
+                        <td className="table-cell">{count.value.toLocaleString()}</td>
+                        <td className="table-cell">{count.sex}</td>
+                        <td className="table-cell">{count.reliabilty}</td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 };

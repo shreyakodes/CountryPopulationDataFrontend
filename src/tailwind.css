@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .text-md {
+        font-size: 1rem; /* 16px */
+    }
+
+    .item {
+        @apply block text-md text-gray-700 hover:text-blue-700 hover:underline transition duration-300;
+    }
+
+    .list {
+        @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3;
+    }
+
+    .table-style {
+        @apply min-w-full table-auto border-collapse border border-gray-300;
+    }
+
+    .table-header {
+        @apply bg-gray-100;
+    }
+
+    .table-cell {
+        @apply px-4 py-2 text-left text-gray-700;
+    }
+
+    .table-row {
+        @apply border-b;
+    }
+
+    .text-blue-link {
+        @apply text-blue-500 hover:text-blue-700 hover:underline;
+    }
+
+    .container-style {
+        @apply p-3 bg-white;
+    }
+
+    .heading-style {
+        @apply text-xl font-bold text-blue-600 mb-4;
+    }
+}

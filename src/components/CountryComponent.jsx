@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-// CountryComponent takes the list of countries as a prop
-const CountryComponent = ({ countries }) => {
+const CountryComponent = ({countries}) => {
     return (
-        <div>
-            <h2>All Countries</h2>
-            <ul>
+        <div className="container-style">
+            <h2 className="heading-style">All Countries</h2>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {countries.map((country) => (
                     <li key={country.iso3}>
-                        {/* Each country will have a link to its details page */}
-                        <Link to={`/countries/${country.iso3}`}>{country.country}</Link>
+                        <Link
+                            to={`/countries/${country.iso3}`}
+                            className="item">
+                            {country.country}
+                        </Link>
                     </li>
                 ))}
             </ul>
