@@ -51,10 +51,8 @@ const App = () => {
                     <Route path="/cities" element={<CityComponent/>}/>
                     <Route path="/cities/:city" element={<CityPopulationDataComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3" element={<CountryDetailsComponent countries={countries.data}/>}/>
-                    <Route path="/countries/:iso3/cities"
-                           element={<CountryCityComponent countries={countries.data}/>}/>
-                    <Route path="/countries/:iso3/cities/:city"
-                           element={<CityPopulationDataComponent countries={countries.data}/>}/>
+                    <Route path="/countries/:iso3/cities" element={<CountryCityComponent countries={countries.data}/>}/>
+                    <Route path="/countries/:iso3/cities/:city" element={<CityPopulationDataComponent countries={countries.data}/>}/>
                 </Routes>
             </div>
         </Router>

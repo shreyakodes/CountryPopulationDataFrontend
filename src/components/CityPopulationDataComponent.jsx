@@ -42,8 +42,7 @@ const CityPopulationDataComponent = ({countries}) => {
                 Population Data for {cityInfo.city}, {countryData ? (
                 <Link
                     to={`/countries/${iso3}`}
-                    className="text-blue-link"
-                >
+                    className="text-blue-link">
                     {cityInfo.country}
                 </Link>
             ) : (

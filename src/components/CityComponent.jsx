@@ -24,8 +24,7 @@ const CityComponent = () => {
                         <li key={city.city}>
                             <Link
                                 to={`/cities/${city.city}`}
-                                className="item"
-                            >
+                                className="item">
                                 {city.city}
                             </Link>
                         </li>

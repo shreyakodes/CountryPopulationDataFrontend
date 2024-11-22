@@ -16,8 +16,7 @@ const CountryCityComponent = ({ countries }) => {
                     <li key={index}>
                         <Link
                             to={`/countries/${iso3}/cities/${city}`}
-                            className="item"
-                        >
+                            className="item">
                             {city}
                         </Link>
                     </li>
