@@ -22,7 +22,7 @@ const fetchCountryFlag = async (iso2) => {
     return response.json();
 };
 
-// Fetch capital data from the API
+// Fetch population data from the API
 const fetchCountryPopulation = async () => {
     const response = await fetch('https://countriesnow.space/api/v0.1/countries/population');
     if (!response.ok) {
@@ -49,33 +49,31 @@ const CountryDetailsComponent = ({countries}) => {
 
     const {iso2, cities} = country; // Extracts information from the country object
 
-    // Fetch flag data
+    // Fetch data using React Query
     const {data: flagData, isLoading: isFlagLoading, isError: isFlagError} = useQuery(
         ['getCountryFlag', iso2],
         () => fetchCountryFlag(iso2),
         {enabled: !!iso2} // Only run if iso2 is available
     );
 
-    // Fetch capitals data
     const {data: capitalsData, isLoading: isCapitalLoading, isError: isCapitalError} = useQuery(
         'getCapitals',
         fetchCountryCapital
     );
 
-    // Fetch population data
     const {data: populationData, isLoading: isPopulationLoading, isError: isPopulationError} = useQuery(
         'getCountryPopulation',
         fetchCountryPopulation
     );
+
     if (isFlagLoading || isCapitalLoading || isPopulationLoading) return <p className="container-style">Loading...</p>;
     if (isFlagError || isCapitalError || isPopulationError) return <p className="container-style">Error fetching data</p>;
 
-    // Extract flag and capital from the fetched data
     const flag = flagData?.data?.flag;
     const capital = capitalsData?.data?.find((capital) => capital.iso3 === iso3)?.capital;
     const populationInfo = populationData?.data?.find((item) => item.country === country.country)?.populationCounts;
 
-    // Get the most recent population
+    // Get the most recent population data
     const latestPopulation = populationInfo?.[populationInfo.length - 1];
 
     return (

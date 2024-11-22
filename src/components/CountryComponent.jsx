@@ -5,6 +5,7 @@ const CountryComponent = ({countries}) => {
         <div className="container-style">
             <h2 className="heading-style">All Countries</h2>
             <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {/* Retrieves and displays every country name*/}
                 {countries.map((country) => (
                     <li key={country.iso3}>
                         <Link

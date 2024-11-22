@@ -4,7 +4,7 @@ import CityComponent from "./components/CityComponent.jsx";
 import CountryComponent from "./components/CountryComponent.jsx";
 import CountryDetailsComponent from "./components/CountryDetailsComponent.jsx";
 import CountryCityComponent from "./components/CountryCityComponent.jsx";
-import CityPopulationData from "./components/CityPopulationData.jsx";
+import CityPopulationDataComponent from "./components/CityPopulationDataComponent.jsx";
 import './tailwind.css';
 
 // Fetch function to get countries
@@ -23,6 +23,7 @@ const App = () => {
     return (
         <Router>
             <div>
+                {/* Add the navigation bar for all pages*/}
                 <nav className="bg-gradient-to-r from-blue-500 to-indigo-600 px-3 py-2 shadow-md">
                     <div className="container mx-auto flex justify-between items-center">
                         <h1 className="text-white text-xl font-extrabold tracking-wide">
@@ -44,16 +45,16 @@ const App = () => {
                         </div>
                     </div>
                 </nav>
-
+                {/* Routes to load pages using components */}
                 <Routes>
                     <Route path="/countries" element={<CountryComponent countries={countries.data}/>}/>
                     <Route path="/cities" element={<CityComponent/>}/>
-                    <Route path="/cities/:city" element={<CityPopulationData countries={countries.data}/>}/>
+                    <Route path="/cities/:city" element={<CityPopulationDataComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3" element={<CountryDetailsComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3/cities"
                            element={<CountryCityComponent countries={countries.data}/>}/>
                     <Route path="/countries/:iso3/cities/:city"
-                           element={<CityPopulationData countries={countries.data}/>}/>
+                           element={<CityPopulationDataComponent countries={countries.data}/>}/>
                 </Routes>
             </div>
         </Router>

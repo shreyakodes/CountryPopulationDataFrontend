@@ -18,6 +18,7 @@ const CityComponent = () => {
         <div className="container-style">
             <h2 className="heading-style">All Cities</h2>
             <ul className="list">
+                {/* Retrieves and displays every city name*/}
                 {cities.data.map((city) => {
                     return (
                         <li key={city.city}>

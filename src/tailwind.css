@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom CSS */
 @layer utilities {
     .text-md {
-        font-size: 1rem; /* 16px */
+        font-size: 1rem;
     }
 
     .item {
